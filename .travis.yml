@@ -1,0 +1,15 @@
+sudo: required
+
+services:
+- docker
+
+language: bash
+
+branches:
+  only:
+  - master
+
+script:
+  # Build X86 docker image
+  - docker build -f ./Dockerfile -t erikdevries/transcoder .
+  - docker run -it --entrypoint=/usr/bin/python erikdevries/transcoder --version
