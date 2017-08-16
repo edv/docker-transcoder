@@ -5,6 +5,8 @@ RUN apk -U update && \
     apk -U upgrade && \
     apk -U add \
         git \
+        inotify-tools \
+        ffmpeg \
     && \
     rm -rf /tmp/src && \
     rm -rf /var/cache/apk/*
