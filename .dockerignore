@@ -1,6 +1,8 @@
 # Git files
 .git
 .gitignore
+input
+output
 
 # Docs
 LICENSE

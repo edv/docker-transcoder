@@ -13,3 +13,6 @@ This could be used to e.g. transcode videos to H.265 without manual intervention
 ## Build Docker container
 
 `docker build -t transcoder .`
+
+
+docker run --name transcoder -d -v <path to input>:/input -v <path to output>:/output -v /etc/localtime:/etc/localtime:ro transcoder
