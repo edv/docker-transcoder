@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bash
+
+mkdir -p /input/processed /input/unprocessable /output
+
+SHELL=bash chokidar "/input/*.webm" -c "if [ '{event}' = 'add' ] || [ '{event}' = 'change' ]; then /convert.sh '{path}'; fi;"

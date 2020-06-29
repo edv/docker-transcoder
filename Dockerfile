@@ -1,16 +1,20 @@
-FROM alpine:3.6
+FROM erikdevries/baseimage:latest
 MAINTAINER Erik de Vries <docker@erikdevries.nl>
 
 RUN apk -U update && \
     apk -U upgrade && \
-    apk -U add \
+    apk -U add --no-cache \
         git \
+        bash \
+        npm \
+        inotify-tools \
+        ffmpeg \
     && \
+    npm install -g chokidar-cli && \
     rm -rf /tmp/src && \
     rm -rf /var/cache/apk/*
 
-VOLUME ["/input", "/output"]
+# Copy root filesystem
+COPY rootfs /
 
-COPY ./entrypoint.sh /entrypoint.sh
-
-ENTRYPOINT ["/bin/sh", "/entrypoint.sh"]
+RUN chmod +x /convert.sh
