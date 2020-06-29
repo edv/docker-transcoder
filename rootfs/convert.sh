@@ -1,13 +1,28 @@
 #!/bin/bash
 
-echo Running
+echo Running....
 
-input=$1
-output="/output/$(basename $input).mp4"
-processed="/input/processed/$(basename $input)"
+inputFullPath=$1
+echo $inputFullPath
 
-echo Converting $input to $output
-ffmpeg -i "$input" "$output"
+inputOriginal=$(basename "$inputFullPath")
+echo $inputOriginal
 
-echo Moved $input to $processed
-mv "$input" "$processed"
+inputWithoutExtension=$(basename "$inputFullPath" .webm)
+echo $inputWithoutExtension
+
+output="/output/$inputWithoutExtension.mp4"
+processed="/input/processed/$inputOriginal"
+unprocessable="/input/unprocessable/$inputOriginal"
+
+if [ -f "$output" ]; then
+    echo "$output already exists, skipping conversion!"
+    mv "$inputFullPath" "$unprocessable"
+else
+    echo Converting $inputFullPath to $output
+    ffmpeg -i "$inputFullPath" "$output"
+    #ffmpeg -hide_banner -loglevel panic -i "$inputFullPath" "$output"
+
+    echo Moved $inputFullPath to $processed
+    mv "$inputFullPath" "$processed"
+fi

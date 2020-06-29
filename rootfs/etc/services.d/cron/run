@@ -1,18 +1,5 @@
 #!/usr/bin/with-contenv bash
 
-mkdir -p /input/processed /output
+mkdir -p /input/processed /input/unprocessable /output
 
-echo `basename /tmp/kip.jog`
-
-SHELL=bash chokidar "/input/*.webm" -c "if [ '{event}' = 'add' ]; then /convert.sh {path}; fi;"
-
-
-#inotifywait -e create,delete,modify,move --format '%f' /input | while read FILE
-#do
-#    echo "New file detected: $FILE"
-#    #ffmpeg -i "/input/$FILE" "/output/$FILE.mp4";
-#    #mv "/input/$FILE" /input/processed
-#done
-
-
-    fswatch -e ".*" -i "\\.webm$" . |xargs -n1 basename|xargs -n1 -t -I {} sh -c 'pwd;[[ -f {} ]] && ffmpeg -i "{}" -an -vf "setpts=0.25*PTS" "{}-alter.mp4"'
+SHELL=bash chokidar "/input/*.webm" -c "if [ '{event}' = 'add' ]; then /convert.sh '{path}'; fi;"
