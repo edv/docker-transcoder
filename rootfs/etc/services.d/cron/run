@@ -2,4 +2,4 @@
 
 mkdir -p /input/processed /input/unprocessable /output
 
-SHELL=bash chokidar "/input/*.webm" -c "if [ '{event}' = 'add' ]; then /convert.sh '{path}'; fi;"
+SHELL=bash chokidar "/input/*.webm" -c "if [ '{event}' = 'add' ] || [ '{event}' = 'change' ]; then /convert.sh '{path}'; fi;"
