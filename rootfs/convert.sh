@@ -20,8 +20,8 @@ if [ -f "$output" ]; then
     mv "$inputFullPath" "$unprocessable"
 else
     echo Converting $inputFullPath to $output
-    ffmpeg -i "$inputFullPath" "$output"
-    #ffmpeg -hide_banner -loglevel panic -i "$inputFullPath" "$output"
+    #ffmpeg -i "$inputFullPath" "$output"
+    ffmpeg -hide_banner -loglevel panic -i "$inputFullPath" "$output"
 
     echo Moved $inputFullPath to $processed
     mv "$inputFullPath" "$processed"
